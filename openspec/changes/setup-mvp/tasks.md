@@ -2,9 +2,9 @@
 
 - [x] 0.1 Inicializar monorepo com npm workspaces (`web/`, `server/`) e `.env` na raiz
 - [x] 0.2 Criar `server/` com Fastify + TypeScript + Prisma + estrutura DDD (domain / application / infrastructure / interfaces / api)
-- [ ] 0.3 Criar `web/` com Nuxt 3 + TypeScript + Tailwind CSS + GSAP
-- [ ] 0.4 Configurar `tsconfig.json`, `eslint`, `prettier` em ambos os workspaces
-- [ ] 0.5 Configurar Jest no `server/` e Vitest no `web/`
+- [x] 0.3 Criar `web/` com Nuxt 3 + TypeScript + Tailwind CSS + GSAP
+- [x] 0.4 Configurar `tsconfig.json`, `eslint`, `prettier` em ambos os workspaces
+- [x] 0.5 Configurar Jest no `server/` e Vitest no `web/`
 - [x] 0.6 Criar `docker-compose.yml` com serviço PostgreSQL para dev
 - [x] 0.7 Manter imagens de referencia em `assets/product-references/`, sem arquivos de imagem soltos na raiz
 
@@ -96,37 +96,37 @@ Detalhes completos: `openspec/changes/setup-mvp/backend-status.md`.
 ## 6. Frontend — Composables e Plugins
 > spec: `product-listing`, `admin-auth`
 
-- [ ] 6.1 Criar plugin `web/plugins/fetch.ts` (ofetch com interceptor 401 → redirect login)
-- [ ] 6.2 Criar composable `useProducts.ts` — `getAll()`, `getById()`
-- [ ] 6.3 Criar composable `useAdminProducts.ts` — `getAll()`, `create()`, `update()`, `delete()`, `toggle()`
-- [ ] 6.4 Criar composable `useAdminAuth.ts` — `login()`, `logout()`, `isAuthenticated()`
-- [ ] 6.5 Criar middleware Nuxt `web/middleware/auth.ts` — redireciona /admin/* para /admin/login se não autenticado
-- [ ] 6.6 Criar composable `useMotionFade.ts` — GSAP fade-in com translate para uso nos componentes
+- [x] 6.1 Criar plugin `web/plugins/fetch.ts` (ofetch com interceptor 401 → redirect login)
+- [x] 6.2 Criar composable `useProducts.ts` — `getAll()`, `getById()`
+- [x] 6.3 Criar composable `useAdminProducts.ts` — `getAll()`, `create()`, `update()`, `delete()`, `toggle()`
+- [x] 6.4 Criar composable `useAdminAuth.ts` — `login()`, `logout()`, `isAuthenticated()`
+- [x] 6.5 Criar middleware Nuxt `web/middleware/auth.ts` — redireciona /admin/* para /admin/login se não autenticado
+- [x] 6.6 Criar composable `useMotionFade.ts` — GSAP fade-in com translate para uso nos componentes
 
 ---
 
 ## 7. Frontend — Landing Page
 > spec: `product-listing`
 
-- [ ] 7.1 Criar layout `web/layouts/default.vue` (navbar mínima + footer)
-- [ ] 7.2 Criar componente `web/components/Landing/HeroSection.vue` — título, tagline, CTA animado
-- [ ] 7.3 Criar componente `web/components/Landing/ProductCard.vue` — imagem, título, botão Shopee, @error no img
-- [ ] 7.4 Criar componente `web/components/Landing/ProductGrid.vue` — grid responsivo com animação stagger
-- [ ] 7.5 Criar componente `web/components/Landing/EmptyState.vue` — "Em breve novidades"
-- [ ] 7.6 Criar componente `web/components/Landing/FooterSection.vue`
-- [ ] 7.7 Criar página `web/pages/index.vue` — compõe os componentes, busca produtos via `useProducts`
+- [x] 7.1 Criar layout `web/layouts/default.vue` (navbar mínima + footer)
+- [x] 7.2 Criar componente `web/components/Landing/HeroSection.vue` — título, tagline, CTA animado
+- [x] 7.3 Criar componente `web/components/Landing/ProductCard.vue` — imagem, título, botão Shopee, @error no img
+- [x] 7.4 Criar componente `web/components/Landing/ProductGrid.vue` — grid responsivo com animação stagger
+- [x] 7.5 Criar componente `web/components/Landing/EmptyState.vue` — "Em breve novidades"
+- [x] 7.6 Criar componente `web/components/Landing/FooterSection.vue`
+- [x] 7.7 Criar página `web/pages/index.vue` — compõe os componentes, busca produtos via `useProducts`
 
 ---
 
 ## 8. Frontend — Painel Admin
 > spec: `product-management`, `admin-auth`
 
-- [ ] 8.1 Criar layout `web/layouts/admin.vue` — sidebar de navegação, header com logout
-- [ ] 8.2 Criar página `web/pages/admin/login.vue` — formulário de login, chama `useAdminAuth.login()`
-- [ ] 8.3 Criar página `web/pages/admin/index.vue` — dashboard simples (redirect para /admin/produtos)
-- [ ] 8.4 Criar componente `web/components/Admin/ProductTable.vue` — tabela de produtos com toggle e ações
-- [ ] 8.5 Criar componente `web/components/Admin/ProductForm.vue` — formulário de criação/edição reutilizável
-- [ ] 8.6 Criar componente `web/components/Admin/ConfirmDialog.vue` — diálogo de confirmação para exclusão
-- [ ] 8.7 Criar página `web/pages/admin/produtos/index.vue` — usa `ProductTable`, busca via `useAdminProducts`
-- [ ] 8.8 Criar página `web/pages/admin/produtos/novo.vue` — usa `ProductForm`, chama `create()`
-- [ ] 8.9 Criar página `web/pages/admin/produtos/[id].vue` — usa `ProductForm`, carrega produto e chama `update()`
+- [x] 8.1 Criar layout `web/layouts/admin.vue` — sidebar de navegação, header com logout
+- [x] 8.2 Criar página `web/pages/admin/login.vue` — formulário de login, chama `useAdminAuth.login()`
+- [x] 8.3 Criar página `web/pages/admin/index.vue` — dashboard simples (redirect para /admin/produtos)
+- [x] 8.4 Criar componente `web/components/Admin/ProductTable.vue` — tabela de produtos com toggle e ações
+- [x] 8.5 Criar componente `web/components/Admin/ProductForm.vue` — formulário de criação/edição reutilizável
+- [x] 8.6 Criar componente `web/components/Admin/ConfirmDialog.vue` — diálogo de confirmação para exclusão
+- [x] 8.7 Criar página `web/pages/admin/produtos/index.vue` — usa `ProductTable`, busca via `useAdminProducts`
+- [x] 8.8 Criar página `web/pages/admin/produtos/novo.vue` — usa `ProductForm`, chama `create()`
+- [x] 8.9 Criar página `web/pages/admin/produtos/[id].vue` — usa `ProductForm`, carrega produto e chama `update()`
