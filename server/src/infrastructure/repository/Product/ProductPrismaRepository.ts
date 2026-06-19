@@ -9,7 +9,7 @@ export class ProductPrismaRepository implements IProductRepository {
   async findAllActive(): Promise<Product[]> {
     const products = await this.prisma.product.findMany({
       where: { active: true },
-      orderBy: { created_at: 'desc' },
+      orderBy: [{ display_order: 'asc' }, { created_at: 'desc' }],
     });
 
     return products.map(ProductPrismaMapper.toDomain);
@@ -17,7 +17,7 @@ export class ProductPrismaRepository implements IProductRepository {
 
   async findAll(): Promise<Product[]> {
     const products = await this.prisma.product.findMany({
-      orderBy: { created_at: 'desc' },
+      orderBy: [{ display_order: 'asc' }, { created_at: 'desc' }],
     });
 
     return products.map(ProductPrismaMapper.toDomain);

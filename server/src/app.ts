@@ -5,6 +5,7 @@ import { authMiddleware } from './api/middleware/authMiddleware';
 import adminCreateProductRoute from './api/v1/admin/products/create';
 import adminDeleteProductRoute from './api/v1/admin/products/delete';
 import adminGetAllProductsRoute from './api/v1/admin/products/getAll';
+import adminReorderProductsRoute from './api/v1/admin/products/reorder';
 import adminToggleProductRoute from './api/v1/admin/products/toggle';
 import adminUpdateProductRoute from './api/v1/admin/products/update';
 import loginRoute from './api/v1/auth/login';
@@ -49,6 +50,7 @@ export async function buildApp({ prisma }: BuildAppOptions): Promise<FastifyInst
       await adminRoutes.register(adminUpdateProductRoute, { prisma });
       await adminRoutes.register(adminDeleteProductRoute, { prisma });
       await adminRoutes.register(adminToggleProductRoute, { prisma });
+      await adminRoutes.register(adminReorderProductsRoute, { prisma });
     },
     { prefix: '/api/v1' },
   );
