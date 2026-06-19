@@ -1,0 +1,70 @@
+schema: spec-driven
+
+context: |
+  ## Projeto
+  DualStyle — loja de camisetas com designs ETF. Landing page pública de alto impacto visual
+  com grid de produtos que redirecionam para o Shopee, mais um painel admin para gerenciar produtos.
+
+  ## Tech Stack
+  - Frontend: Nuxt 3 + Vue 3 + TypeScript + Tailwind CSS + GSAP (motion)
+  - Backend:  Fastify + TypeScript + Prisma + PostgreSQL
+  - Testes:   Jest + Supertest (backend), Vitest (frontend utils)
+  - Padrão:   DDD + Clean Architecture + SOLID
+
+  ## Arquitetura do Backend (server/)
+  - domain/        → Entities, Value Objects, IRepository (sem dep de infra)
+  - application/   → use-cases/
+  - infrastructure/ → repository/ (PrismaRepository + PrismaMapper)
+  - interfaces/    → adapters/ (mapeiam domain → response DTO)
+  - src/api/v1/    → rotas Fastify (<domínio>/[rota].ts)
+
+  ## Arquitetura do Frontend (web/)
+  - pages/         → rotas Nuxt (index.vue = landing, admin/ = painel)
+  - components/    → UI atômico e composto; nunca > 150 linhas
+  - composables/   → lógica reutilizável (useProducts, useAdmin, etc.)
+  - plugins/       → configuração global (motion, fetch)
+  - layouts/       → default (landing) + admin
+
+  ## Convenções de Código
+  - Entities: constructor privado, create(), restore(), getters, toDTO()
+  - Value Objects: Zod obrigatório, imutáveis
+  - Repositories: PrismaMapper com toDomain() / toPersistence()
+  - Use Cases: recebem interfaces por injeção; nunca acessam Prisma diretamente
+  - Rotas: nomeadas (/create, /getAll, /getById, /update, /delete)
+  - Erros: DomainError (validação 400), ErrorClient (regra de negócio 409), DomainToken (auth 401/403)
+  - Componentes Vue: sempre <script setup lang="ts">, props tipadas, sem lógica pesada no template
+  - Motion: GSAP apenas via composables (useMotion*); nunca inline no template
+
+  ## SDD — Spec-Driven Development
+  - Toda feature começa por spec antes de qualquer código
+  - Specs são fonte de verdade; código e testes derivam delas
+  - Cada Scenario de uma spec deve ter um teste correspondente
+  - Mudanças em comportamento exigem spec atualizada antes do código
+
+rules:
+  spec:
+    - Toda spec deve ter as seções obrigatórias: Purpose, Requirements
+    - Usar SHALL para requisitos obrigatórios
+    - Cada Requirement deve ter ao menos um Scenario
+    - Scenarios usam formato WHEN / THEN exclusivamente
+    - Specs não contêm código, nomes de arquivo ou detalhes de implementação
+    - Cada spec cobre uma única feature ou comportamento coeso
+    - Casos de erro e duplicidade devem ter scenarios próprios
+
+  tasks:
+    - Cada task deve referenciar a spec que a originou
+    - Tasks devem ser atômicas: um comportamento ou um arquivo por task
+    - Indicar a camada afetada: domain / application / infrastructure / interfaces / api / web
+    - Tasks de teste são obrigatórias para cada scenario da spec
+    - Máximo de 2 horas por task; tasks maiores devem ser quebradas
+
+  proposal:
+    - Incluir seção Non-Goals para delimitar escopo
+    - Referenciar docs de arquitetura impactados
+    - Máximo 500 palavras
+    - Incluir impacto em autenticação quando aplicável
+
+  changes:
+    - Toda mudança de comportamento existente exige spec atualizada antes do código
+    - Listar quais scenarios da spec foram afetados
+    - Indicar se há breaking change para clientes da API
