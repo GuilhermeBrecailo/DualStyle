@@ -1,74 +1,95 @@
 ## 0. Setup do Monorepo
 
-- [ ] 0.1 Inicializar monorepo com npm workspaces (`web/`, `server/`) e `.env` na raiz
-- [ ] 0.2 Criar `server/` com Fastify + TypeScript + Prisma + estrutura DDD (domain / application / infrastructure / interfaces / api)
+- [x] 0.1 Inicializar monorepo com npm workspaces (`web/`, `server/`) e `.env` na raiz
+- [x] 0.2 Criar `server/` com Fastify + TypeScript + Prisma + estrutura DDD (domain / application / infrastructure / interfaces / api)
 - [ ] 0.3 Criar `web/` com Nuxt 3 + TypeScript + Tailwind CSS + GSAP
 - [ ] 0.4 Configurar `tsconfig.json`, `eslint`, `prettier` em ambos os workspaces
 - [ ] 0.5 Configurar Jest no `server/` e Vitest no `web/`
-- [ ] 0.6 Criar `docker-compose.yml` com serviço PostgreSQL para dev
+- [x] 0.6 Criar `docker-compose.yml` com serviço PostgreSQL para dev
+- [x] 0.7 Manter imagens de referencia em `assets/product-references/`, sem arquivos de imagem soltos na raiz
 
 ---
 
 ## 1. Domain — Entidade Product
 > spec: `product-management`, `product-listing`
 
-- [ ] 1.1 Criar `server/src/domain/entities/Product/Product.ts` com `create()`, `restore()`, getters e `toDTO()`
-- [ ] 1.2 Criar VO `ProductTitle` (string não vazia, max 100 chars) em `domain/value-objects/Product/`
-- [ ] 1.3 Criar VO `ProductImageUrl` (URL válida) em `domain/value-objects/Product/`
-- [ ] 1.4 Criar VO `ProductShopeeLink` (URL válida) em `domain/value-objects/Product/`
-- [ ] 1.5 Criar interface `IProductRepository` em `domain/repositories/`
-- [ ] 1.6 Testes unitários para `Product.create()` — scenarios de validação obrigatória (spec `product-management`)
-- [ ] 1.7 Testes unitários para VOs — scenarios de valor inválido e válido
+- [x] 1.1 Criar `server/src/domain/entities/Product/Product.ts` com `create()`, `restore()`, getters e `toDTO()`
+- [x] 1.2 Criar VO `ProductTitle` (string não vazia, max 100 chars) em `domain/value-objects/Product/`
+- [x] 1.3 Criar VO `ProductImageUrl` (URL válida) em `domain/value-objects/Product/`
+- [x] 1.4 Criar VO `ProductShopeeLink` (URL válida) em `domain/value-objects/Product/`
+- [x] 1.5 Criar interface `IProductRepository` em `domain/repositories/`
+- [x] 1.6 Testes unitários para `Product.create()` — scenarios de validação obrigatória (spec `product-management`)
+- [x] 1.7 Testes unitários para VOs — scenarios de valor inválido e válido
 
 ---
 
 ## 2. Infrastructure — Prisma
 > spec: `product-management`, `product-listing`
 
-- [ ] 2.1 Criar migration Prisma com tabela `products` (id UUID, title, description, image_url, shopee_link, active, created_at, updated_at)
-- [ ] 2.2 Criar `ProductPrismaMapper` com `toDomain()` e `toPersistence()` em `infrastructure/repository/Product/`
-- [ ] 2.3 Criar `ProductPrismaRepository` implementando `IProductRepository` em `infrastructure/repository/Product/`
-- [ ] 2.4 Testes de integração para `ProductPrismaRepository` — create, update, delete, findAll, findById, findAllActive
+- [x] 2.1 Criar migration Prisma com tabela `products` (id UUID, title, description, image_url, shopee_link, active, created_at, updated_at)
+- [x] 2.2 Criar `ProductPrismaMapper` com `toDomain()` e `toPersistence()` em `infrastructure/repository/Product/`
+- [x] 2.3 Criar `ProductPrismaRepository` implementando `IProductRepository` em `infrastructure/repository/Product/`
+- [x] 2.4 Testes de integração para `ProductPrismaRepository` — create, update, delete, findAll, findById, findAllActive
 
 ---
 
 ## 3. Application — Use Cases
 > spec: `product-management`, `product-listing`
 
-- [ ] 3.1 Criar `CreateProductUseCase` em `application/use-cases/Product/`
-- [ ] 3.2 Criar `UpdateProductUseCase` em `application/use-cases/Product/`
-- [ ] 3.3 Criar `DeleteProductUseCase` em `application/use-cases/Product/`
-- [ ] 3.4 Criar `ToggleProductUseCase` em `application/use-cases/Product/`
-- [ ] 3.5 Criar `GetAllProductsUseCase` em `application/use-cases/Product/`
-- [ ] 3.6 Criar `GetAllActiveProductsUseCase` em `application/use-cases/Product/`
-- [ ] 3.7 Criar `GetProductByIdUseCase` em `application/use-cases/Product/`
-- [ ] 3.8 Testes unitários para cada use case com repositório mockado (scenarios das specs)
+- [x] 3.1 Criar `CreateProductUseCase` em `application/use-cases/Product/`
+- [x] 3.2 Criar `UpdateProductUseCase` em `application/use-cases/Product/`
+- [x] 3.3 Criar `DeleteProductUseCase` em `application/use-cases/Product/`
+- [x] 3.4 Criar `ToggleProductUseCase` em `application/use-cases/Product/`
+- [x] 3.5 Criar `GetAllProductsUseCase` em `application/use-cases/Product/`
+- [x] 3.6 Criar `GetAllActiveProductsUseCase` em `application/use-cases/Product/`
+- [x] 3.7 Criar `GetProductByIdUseCase` em `application/use-cases/Product/`
+- [x] 3.8 Testes unitários para cada use case com repositório mockado (scenarios das specs)
 
 ---
 
 ## 4. Auth — JWT Admin
 > spec: `admin-auth`
 
-- [ ] 4.1 Criar `AdminAuthService` em `application/services/Auth/` — compara email/pass do env, gera JWT
-- [ ] 4.2 Criar hook Fastify `authMiddleware` em `src/api/middleware/` — valida JWT no header Authorization
-- [ ] 4.3 Testes unitários para `AdminAuthService` — scenarios de login válido, email errado, senha errada
-- [ ] 4.4 Testes unitários para `authMiddleware` — sem token, token inválido, token expirado, token válido
+- [x] 4.1 Criar `AdminAuthService` em `application/services/Auth/` — compara email/pass do env, gera JWT
+- [x] 4.2 Criar hook Fastify `authMiddleware` em `src/api/middleware/` — valida JWT no header Authorization
+- [x] 4.3 Testes unitários para `AdminAuthService` — scenarios de login válido, email errado, senha errada
+- [x] 4.4 Testes unitários para `authMiddleware` — sem token, token inválido, token expirado, token válido
 
 ---
 
 ## 5. API — Rotas Fastify
 > spec: `product-listing`, `product-management`, `admin-auth`
 
-- [ ] 5.1 Criar rota `POST /api/v1/auth/login` em `src/api/v1/auth/login.ts`
-- [ ] 5.2 Criar rota `GET /api/v1/products` em `src/api/v1/products/getAll.ts`
-- [ ] 5.3 Criar rota `GET /api/v1/products/:id` em `src/api/v1/products/getById.ts`
-- [ ] 5.4 Criar rota `GET /api/v1/admin/products/all` em `src/api/v1/admin/products/getAll.ts` (protegida)
-- [ ] 5.5 Criar rota `POST /api/v1/admin/products/create` em `src/api/v1/admin/products/create.ts` (protegida)
-- [ ] 5.6 Criar rota `PUT /api/v1/admin/products/update` em `src/api/v1/admin/products/update.ts` (protegida)
-- [ ] 5.7 Criar rota `DELETE /api/v1/admin/products/delete` em `src/api/v1/admin/products/delete.ts` (protegida)
-- [ ] 5.8 Criar rota `PATCH /api/v1/admin/products/toggle` em `src/api/v1/admin/products/toggle.ts` (protegida)
-- [ ] 5.9 Criar adapter `ProductAdapter` em `interfaces/adapters/Product/` para mapear domain → response DTO
-- [ ] 5.10 Testes de integração (Supertest) para cada rota — todos os scenarios das specs
+- [x] 5.1 Criar rota `POST /api/v1/auth/login` em `src/api/v1/auth/login.ts`
+- [x] 5.2 Criar rota `GET /api/v1/products` em `src/api/v1/products/getAll.ts`
+- [x] 5.3 Criar rota `GET /api/v1/products/:id` em `src/api/v1/products/getById.ts`
+- [x] 5.4 Criar rota `GET /api/v1/admin/products/all` em `src/api/v1/admin/products/getAll.ts` (protegida)
+- [x] 5.5 Criar rota `POST /api/v1/admin/products/create` em `src/api/v1/admin/products/create.ts` (protegida)
+- [x] 5.6 Criar rota `PUT /api/v1/admin/products/update` em `src/api/v1/admin/products/update.ts` (protegida)
+- [x] 5.7 Criar rota `DELETE /api/v1/admin/products/delete` em `src/api/v1/admin/products/delete.ts` (protegida)
+- [x] 5.8 Criar rota `PATCH /api/v1/admin/products/toggle` em `src/api/v1/admin/products/toggle.ts` (protegida)
+- [x] 5.9 Criar adapter `ProductAdapter` em `interfaces/adapters/Product/` para mapear domain → response DTO
+- [x] 5.10 Testes de integração (Supertest) para cada rota — todos os scenarios das specs
+- [x] 5.11 Corrigir rotas que chamam use cases por ID para usar payload `{ id }`
+- [x] 5.12 Retornar 404 para produto não encontrado conforme specs, não 409
+- [x] 5.13 Garantir 404 em `GET /api/v1/products/:id` quando produto estiver inativo
+- [x] 5.14 Criar primeira cobertura de integração para fluxo principal das rotas com `fastify.inject()`
+- [x] 5.15 Ampliar testes de rotas para cenários de erro, validação e auth
+
+---
+
+## 5.1 Auditoria Backend — 2026-06-19
+
+Detalhes completos: `openspec/changes/setup-mvp/backend-status.md`.
+
+- [x] Corrigir build TypeScript do `server/`
+- [x] Criar `.env` local a partir de `.env.example`
+- [x] Validar `DATABASE_URL`
+- [x] Criar migration Prisma para `products`
+- [x] Corrigir geração/tipagem do Prisma Client para expor `Product`
+- [x] Separar criação do app Fastify do `listen()` para testes de integração
+- [x] Criar testes unitários de auth e middleware
+- [x] Criar testes de integração do repository Prisma e rotas
 
 ---
 

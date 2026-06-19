@@ -42,8 +42,11 @@ DualStyle/
 ├── openspec/                 # Spec-Driven: fonte de verdade funcional
 │   ├── config.yaml
 │   └── changes/
+├── assets/
+│   └── product-references/   # Fotos e referencias visuais de produto
 ├── docs/
-│   └── sdd.md                # Este documento
+│   ├── sdd.md                # Este documento
+│   └── backend-status.md     # Auditoria atual do backend
 ├── web/                      # Frontend Nuxt 3
 └── server/                   # Backend Fastify
 ```
@@ -211,6 +214,28 @@ CREATE TABLE products (
 - Frontend armazena token em `localStorage` (ou cookie httpOnly se segurança for prioridade futura)
 - Middleware Fastify valida JWT antes de todas as rotas `/api/v1/admin/*`
 - Frontend middleware Nuxt redireciona para `/admin/login` se não autenticado
+
+---
+
+## 7.1 Status do Backend
+
+Auditoria registrada em 2026-06-19 e atualizada apos a primeira correcao do backend:
+
+- O backend possui dominio, use cases, rotas, auth JWT, repository Prisma e testes unitarios
+  de produto parcialmente implementados.
+- `npm test` em `server/` passa.
+- `npm run build` em `server/` passa.
+- `npx prisma validate --schema server/prisma/schema.prisma` passa.
+- A migration inicial de `products` foi criada e aplicada no PostgreSQL local via Docker.
+- O PostgreSQL de desenvolvimento usa porta host `5433` para evitar conflito com `5432`.
+- Produto nao encontrado e produto inativo no detalhe publico retornam `404`.
+- `server/src/app.ts` expoe `buildApp({ prisma })` para testes e `server/src/main.ts`
+  apenas sobe o servidor.
+- As rotas foram testadas com `fastify.inject()` em
+  `server/src/test/integration/api/AppRoutes.spec.ts`.
+- Auth, middleware e repository Prisma tambem possuem testes automatizados.
+- O login admin e testado usando as credenciais carregadas do `.env`.
+- Detalhes e proximos passos estao em `docs/backend-status.md`.
 
 ---
 
