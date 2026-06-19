@@ -1,12 +1,30 @@
 <script setup lang="ts">
 const heroRef = ref<HTMLElement | null>(null)
+const marqueeRef = ref<HTMLElement | null>(null)
 const scrollY = ref(0)
 const { fadeIn } = useMotionFade()
 
-onMounted(() => {
+const TAGS = ['DUO STYLE', 'STREET WEAR', 'URBAN DROP', 'FUTEBOL', 'OVERSIZED', 'NOVA COLEÇÃO', 'POP CULTURE', 'LIMITED EDITION']
+
+onMounted(async () => {
   if (heroRef.value) fadeIn(heroRef.value, 0.1)
+
   const onScroll = () => { scrollY.value = window.scrollY }
   window.addEventListener('scroll', onScroll, { passive: true })
+
+  // GSAP para marquee infinito garantido (mede o DOM real)
+  if (marqueeRef.value) {
+    const { gsap } = await import('gsap')
+    const firstCopy = marqueeRef.value.children[0] as HTMLElement
+    const copyWidth = firstCopy.offsetWidth
+    gsap.to(marqueeRef.value, {
+      x: -copyWidth,
+      duration: 28,
+      ease: 'none',
+      repeat: -1,
+    })
+  }
+
   onUnmounted(() => window.removeEventListener('scroll', onScroll))
 })
 </script>
@@ -14,7 +32,7 @@ onMounted(() => {
 <template>
   <section ref="heroRef" class="relative h-dvh flex flex-col items-center justify-center overflow-hidden">
 
-    <!-- Background: foto urban com overlay -->
+    <!-- Background -->
     <div class="absolute inset-0">
       <img
         src="/products/p3.jpg"
@@ -36,7 +54,6 @@ onMounted(() => {
         <span class="w-8 h-px bg-brand-yellow/50" />
       </p>
 
-      <!-- Título gigante centralizado -->
       <h1 class="font-display leading-[0.85] select-none">
         <span class="block text-[clamp(5.5rem,22vw,16rem)] text-white">DUO</span>
         <span class="block text-[clamp(5.5rem,22vw,16rem)] text-brand-yellow -mt-3">STYLE</span>
@@ -44,7 +61,6 @@ onMounted(() => {
 
       <p class="mt-6 text-[10px] text-gray-500 uppercase tracking-[0.45em]">• Street Wear •</p>
 
-      <!-- CTAs -->
       <div class="mt-10 flex items-center gap-4">
         <a
           href="#colecao"
@@ -69,7 +85,6 @@ onMounted(() => {
       <span class="text-[8px] text-white uppercase tracking-widest">scroll</span>
     </div>
 
-    <!-- Número canto esquerdo -->
     <div class="absolute bottom-8 left-6 md:left-10 flex items-center gap-2 opacity-30">
       <span class="font-display text-[9px] text-white tracking-widest">01 / 09</span>
     </div>
@@ -77,9 +92,10 @@ onMounted(() => {
 
   <!-- Marquee strip -->
   <div class="border-y border-white/[0.06] bg-[#080808] py-3.5 overflow-hidden">
-    <div class="flex w-max animate-marquee">
-      <span v-for="i in 2" :key="i" class="flex shrink-0 items-center">
-        <template v-for="tag in ['DUO STYLE', 'STREET WEAR', 'URBAN DROP', 'FUTEBOL', 'OVERSIZED', 'NOVA COLEÇÃO', 'POP CULTURE', 'LIMITED EDITION']" :key="tag">
+    <div ref="marqueeRef" class="flex">
+      <!-- 2 cópias idênticas: GSAP move exatamente 1 cópia e reseta -->
+      <span v-for="copy in 2" :key="copy" class="flex shrink-0 items-center">
+        <template v-for="tag in TAGS" :key="tag">
           <span class="text-[10px] font-display text-gray-700 uppercase tracking-widest px-5 whitespace-nowrap">{{ tag }}</span>
           <span class="text-brand-yellow/30 text-xs shrink-0">★</span>
         </template>
