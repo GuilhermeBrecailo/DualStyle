@@ -15,6 +15,9 @@ const updateProductBodySchema = z.object({
   description: z.string().optional(),
   image_url: z.string().optional(),
   shopee_link: z.string().optional(),
+  price: z.number().positive().nullable().optional(),
+  sizes: z.array(z.string()).optional(),
+  featured: z.boolean().optional(),
   active: z.boolean().optional(),
 });
 

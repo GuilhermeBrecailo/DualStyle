@@ -1,8 +1,12 @@
 <script setup lang="ts">
 const { logout } = useAdminAuth()
 const route = useRoute()
+const { toasts } = useToast()
 
-const navLinks = [{ label: 'Produtos', path: '/admin/produtos', icon: '▤' }]
+const navLinks = [
+  { label: 'Dashboard', path: '/admin', icon: '◈' },
+  { label: 'Produtos', path: '/admin/produtos', icon: '▤' },
+]
 </script>
 
 <template>
@@ -20,7 +24,7 @@ const navLinks = [{ label: 'Produtos', path: '/admin/produtos', icon: '▤' }]
           :key="link.path"
           :to="link.path"
           class="flex items-center gap-2.5 px-3 py-2.5 text-xs tracking-wide transition-all duration-200 group"
-          :class="route.path.startsWith(link.path)
+          :class="(link.path === '/admin' ? route.path === '/admin' : route.path.startsWith(link.path))
             ? 'text-brand-yellow bg-brand-yellow/5 border-l-2 border-brand-yellow pl-[10px]'
             : 'text-gray-600 hover:text-gray-300 border-l-2 border-transparent'"
         >
@@ -59,5 +63,28 @@ const navLinks = [{ label: 'Produtos', path: '/admin/produtos', icon: '▤' }]
         <slot />
       </main>
     </div>
+
+    <!-- Toasts -->
+    <div class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none">
+      <TransitionGroup name="toast">
+        <div
+          v-for="toast in toasts"
+          :key="toast.id"
+          class="flex items-center gap-3 px-4 py-3 text-xs uppercase tracking-widest pointer-events-auto"
+          :class="toast.type === 'success'
+            ? 'bg-brand-yellow text-brand-black'
+            : 'bg-red-500 text-white'"
+        >
+          <span>{{ toast.type === 'success' ? '✓' : '✕' }}</span>
+          {{ toast.message }}
+        </div>
+      </TransitionGroup>
+    </div>
   </div>
 </template>
+
+<style scoped>
+.toast-enter-active, .toast-leave-active { transition: all 0.25s ease; }
+.toast-enter-from { opacity: 0; transform: translateY(8px); }
+.toast-leave-to { opacity: 0; transform: translateY(8px); }
+</style>

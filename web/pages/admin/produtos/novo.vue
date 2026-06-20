@@ -5,6 +5,7 @@ definePageMeta({ middleware: 'auth', layout: 'admin', title: 'Novo produto' })
 
 const { create } = useAdminProducts()
 const router = useRouter()
+const { show } = useToast()
 
 const loading = ref(false)
 const error = ref<string | null>(null)
@@ -14,6 +15,7 @@ async function handleSubmit(data: ProductFormData) {
   loading.value = true
   try {
     await create(data)
+    show('Produto criado com sucesso!')
     await router.push('/admin/produtos')
   } catch {
     error.value = 'Erro ao criar produto.'

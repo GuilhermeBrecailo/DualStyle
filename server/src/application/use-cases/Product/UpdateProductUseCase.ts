@@ -8,6 +8,9 @@ interface Input {
   description?: string;
   image_url?: string;
   shopee_link?: string;
+  price?: number | null;
+  sizes?: string[];
+  featured?: boolean;
   active?: boolean;
 }
 
@@ -23,6 +26,9 @@ export class UpdateProductUseCase {
       description: input.description,
       image_url: input.image_url,
       shopee_link: input.shopee_link,
+      price: input.price,
+      sizes: input.sizes,
+      featured: input.featured,
       active: input.active,
     });
 

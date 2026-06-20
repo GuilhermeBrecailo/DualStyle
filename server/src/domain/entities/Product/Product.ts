@@ -9,6 +9,9 @@ export interface ProductDTO {
   description?: string;
   image_url: string;
   shopee_link: string;
+  price?: number | null;
+  sizes: string[];
+  featured: boolean;
   active: boolean;
   created_at: Date;
   updated_at: Date;
@@ -20,6 +23,9 @@ interface ProductProps {
   description?: string;
   image_url: ProductImageUrl;
   shopee_link: ProductShopeeLink;
+  price?: number | null;
+  sizes: string[];
+  featured: boolean;
   active: boolean;
   created_at: Date;
   updated_at: Date;
@@ -37,6 +43,9 @@ export class Product {
     description?: string;
     image_url: string;
     shopee_link: string;
+    price?: number | null;
+    sizes?: string[];
+    featured?: boolean;
   }): Product {
     return new Product({
       id: randomUUID(),
@@ -44,6 +53,9 @@ export class Product {
       description: input.description,
       image_url: ProductImageUrl.create(input.image_url),
       shopee_link: ProductShopeeLink.create(input.shopee_link),
+      price: input.price ?? null,
+      sizes: input.sizes ?? [],
+      featured: input.featured ?? false,
       active: true,
       created_at: new Date(),
       updated_at: new Date(),
@@ -57,6 +69,9 @@ export class Product {
       description: dto.description,
       image_url: ProductImageUrl.create(dto.image_url),
       shopee_link: ProductShopeeLink.create(dto.shopee_link),
+      price: dto.price ?? null,
+      sizes: dto.sizes ?? [],
+      featured: dto.featured ?? false,
       active: dto.active,
       created_at: dto.created_at,
       updated_at: dto.updated_at,
@@ -68,6 +83,9 @@ export class Product {
     description?: string;
     image_url?: string;
     shopee_link?: string;
+    price?: number | null;
+    sizes?: string[];
+    featured?: boolean;
     active?: boolean;
   }): void {
     if (input.title !== undefined) {
@@ -81,6 +99,15 @@ export class Product {
     }
     if (input.shopee_link !== undefined) {
       (this.props as any).shopee_link = ProductShopeeLink.create(input.shopee_link);
+    }
+    if (input.price !== undefined) {
+      this.props.price = input.price;
+    }
+    if (input.sizes !== undefined) {
+      this.props.sizes = input.sizes;
+    }
+    if (input.featured !== undefined) {
+      this.props.featured = input.featured;
     }
     if (input.active !== undefined) {
       this.props.active = input.active;
@@ -98,6 +125,9 @@ export class Product {
   get description(): string | undefined { return this.props.description; }
   get image_url(): string { return this.props.image_url.value; }
   get shopee_link(): string { return this.props.shopee_link.value; }
+  get price(): number | null | undefined { return this.props.price; }
+  get sizes(): string[] { return this.props.sizes; }
+  get featured(): boolean { return this.props.featured; }
   get active(): boolean { return this.props.active; }
   get created_at(): Date { return this.props.created_at; }
   get updated_at(): Date { return this.props.updated_at; }
@@ -109,6 +139,9 @@ export class Product {
       description: this.props.description,
       image_url: this.props.image_url.value,
       shopee_link: this.props.shopee_link.value,
+      price: this.props.price,
+      sizes: this.props.sizes,
+      featured: this.props.featured,
       active: this.props.active,
       created_at: this.props.created_at,
       updated_at: this.props.updated_at,

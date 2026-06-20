@@ -7,6 +7,7 @@ const { update } = useAdminProducts()
 const nuxtApp = useNuxtApp()
 const router = useRouter()
 const route = useRoute()
+const { show } = useToast()
 
 const product = ref<Product | null>(null)
 const loading = ref(false)
@@ -31,6 +32,7 @@ async function handleSubmit(data: ProductFormData) {
   loading.value = true
   try {
     await update(product.value.id, data)
+    show('Produto atualizado!')
     await router.push('/admin/produtos')
   } catch {
     error.value = 'Erro ao atualizar produto.'

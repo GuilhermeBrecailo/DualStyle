@@ -4,6 +4,9 @@ export interface Product {
   description?: string | null
   image_url: string
   shopee_link: string
+  price?: number | null
+  sizes: string[]
+  featured: boolean
   active: boolean
   created_at: string
   updated_at: string
@@ -14,4 +17,7 @@ export interface ProductFormData {
   description?: string
   image_url: string
   shopee_link: string
+  price?: number | null
+  sizes: string[]
+  featured: boolean
 }

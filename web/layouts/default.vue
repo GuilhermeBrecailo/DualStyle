@@ -4,7 +4,7 @@
     <header class="fixed top-0 inset-x-0 z-50 mix-blend-difference">
       <div class="flex items-center justify-between px-5 md:px-8 h-14">
         <a href="/" class="block">
-          <img src="/products/logo.jpg" alt="Duo Style" class="h-8 w-auto invert" />
+          <img src="/logo.png" alt="Duo Style" class="h-8 w-auto" />
         </a>
 
         <nav class="flex items-center gap-8">

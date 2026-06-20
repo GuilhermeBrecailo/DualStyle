@@ -6,6 +6,9 @@ type ProductPersistenceDTO = {
   description?: string | null;
   image_url: string;
   shopee_link: string;
+  price?: number | null;
+  sizes: string[];
+  featured: boolean;
   active: boolean;
 };
 
@@ -17,6 +20,9 @@ export class ProductPrismaMapper {
       description: raw.description ?? undefined,
       image_url: raw.image_url,
       shopee_link: raw.shopee_link,
+      price: raw.price ? Number(raw.price) : null,
+      sizes: raw.sizes ?? [],
+      featured: raw.featured ?? false,
       active: raw.active,
       created_at: raw.created_at,
       updated_at: raw.updated_at,
@@ -29,6 +35,9 @@ export class ProductPrismaMapper {
       description: product.description,
       image_url: product.image_url,
       shopee_link: product.shopee_link,
+      price: product.price ?? null,
+      sizes: product.sizes,
+      featured: product.featured,
       active: product.active,
     };
   }

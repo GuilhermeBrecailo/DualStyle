@@ -6,6 +6,9 @@ interface Input {
   description?: string;
   image_url: string;
   shopee_link: string;
+  price?: number | null;
+  sizes?: string[];
+  featured?: boolean;
 }
 
 export class CreateProductUseCase {

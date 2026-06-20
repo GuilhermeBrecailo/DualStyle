@@ -14,6 +14,9 @@ const createProductBodySchema = z.object({
   description: z.string().optional(),
   image_url: z.string(),
   shopee_link: z.string(),
+  price: z.number().positive().nullable().optional(),
+  sizes: z.array(z.string()).optional(),
+  featured: z.boolean().optional(),
 });
 
 const createProductRoute: FastifyPluginAsync<AdminProductRoutesOptions> = async (fastify, options) => {

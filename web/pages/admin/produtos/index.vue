@@ -206,8 +206,17 @@ onMounted(load)
                   loading="lazy"
                 />
                 <div class="min-w-0">
-                  <p class="text-white/80 truncate max-w-[200px]">{{ product.title }}</p>
-                  <p v-if="product.description" class="text-gray-600 text-[10px] truncate max-w-[200px]">{{ product.description }}</p>
+                  <div class="flex items-center gap-2">
+                    <p class="text-white/80 truncate max-w-[180px]">{{ product.title }}</p>
+                    <span v-if="product.featured" class="text-brand-yellow text-[9px]">★</span>
+                  </div>
+                  <div class="flex items-center gap-3 mt-0.5">
+                    <p v-if="product.price" class="text-brand-yellow text-[10px] font-semibold">
+                      R$ {{ product.price.toFixed(2).replace('.', ',') }}
+                    </p>
+                    <p v-else class="text-gray-700 text-[10px]">sem preço</p>
+                    <p v-if="product.sizes?.length" class="text-gray-600 text-[10px]">{{ product.sizes.join(' · ') }}</p>
+                  </div>
                 </div>
               </div>
             </td>
@@ -227,7 +236,15 @@ onMounted(load)
 
             <!-- Actions -->
             <td class="py-3 text-right">
-              <div class="flex items-center justify-end gap-3">
+              <div class="flex items-center justify-end gap-4">
+                <a
+                  :href="`/produto/${product.id}`"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-[10px] text-gray-700 hover:text-gray-400 uppercase tracking-widest transition-colors duration-200"
+                >
+                  Ver ↗
+                </a>
                 <button
                   class="text-[10px] text-gray-600 hover:text-white uppercase tracking-widest transition-colors duration-200"
                   @click="router.push(`/admin/produtos/${product.id}`)"
