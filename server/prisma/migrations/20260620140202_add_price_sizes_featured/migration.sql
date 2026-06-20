@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "products" ADD COLUMN     "featured" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "price" DECIMAL(10,2),
+ADD COLUMN     "sizes" TEXT[] DEFAULT ARRAY[]::TEXT[],
+ALTER COLUMN "id" DROP DEFAULT;
