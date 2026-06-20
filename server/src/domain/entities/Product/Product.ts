@@ -10,8 +10,8 @@ export interface ProductDTO {
   image_url: string;
   shopee_link: string;
   price?: number | null;
-  sizes: string[];
-  featured: boolean;
+  sizes?: string[];
+  featured?: boolean;
   active: boolean;
   created_at: Date;
   updated_at: Date;
