@@ -1,7 +1,7 @@
 ## Purpose
 
-Permitir que o admin crie, edite, remova e ative/desative produtos do catálogo DualStyle
-através de um painel protegido por autenticação.
+Permitir que o admin crie, edite, remova, ative/desative e reordene produtos do catálogo
+DualStyle através de um painel protegido por autenticação.
 
 ---
 
@@ -9,8 +9,8 @@ através de um painel protegido por autenticação.
 
 ### Requirement: Criar produto
 
-O sistema SHALL permitir que o admin crie um produto com título, descrição, URL da imagem
-e link do Shopee.
+O sistema SHALL permitir que o admin crie um produto com título, descrição, URL da imagem,
+link do Shopee, preço opcional, tamanhos disponíveis e flag de destaque.
 
 #### Scenario: Criação com dados válidos
 - **WHEN** `POST /api/v1/admin/products/create` é chamado com `title`, `image_url` e `shopee_link` preenchidos
@@ -74,7 +74,8 @@ O sistema SHALL permitir que o admin alterne o campo `active` de um produto sem 
 
 ### Requirement: Listar todos os produtos no admin
 
-O sistema SHALL retornar todos os produtos (ativos e inativos) para o painel admin.
+O sistema SHALL retornar todos os produtos (ativos e inativos) para o painel admin,
+ordenados por `display_order` crescente.
 
 #### Scenario: Listagem completa para o admin
 - **WHEN** `GET /api/v1/admin/products/all` é chamado com JWT válido
@@ -83,3 +84,52 @@ O sistema SHALL retornar todos os produtos (ativos e inativos) para o painel adm
 #### Scenario: Listagem vazia
 - **WHEN** `GET /api/v1/admin/products/all` é chamado e não há produtos cadastrados
 - **THEN** o sistema retorna status 200 com array vazio `[]`
+
+---
+
+### Requirement: Reordenar produtos
+
+O sistema SHALL permitir que o admin defina manualmente a ordem de exibição dos produtos
+via drag-and-drop no painel, persistindo a posição de cada item.
+
+#### Scenario: Reordenação com dados válidos
+- **WHEN** `PATCH /api/v1/admin/products/reorder` é chamado com array `orders` contendo `{ id, position }` para cada produto
+- **THEN** o sistema atualiza `display_order` de cada produto em transação atômica e retorna status 200
+
+#### Scenario: Reordenação refletida na listagem
+- **WHEN** o admin salva a nova ordem e acessa `GET /api/v1/admin/products/all` em seguida
+- **THEN** os produtos são retornados na ordem persistida
+
+---
+
+### Requirement: Buscar produtos no admin
+
+O sistema SHALL permitir que o admin filtre a lista de produtos por texto em tempo real,
+sem requisição adicional ao servidor.
+
+#### Scenario: Busca com termo correspondente
+- **WHEN** o admin digita um termo no campo de busca do painel
+- **THEN** a tabela exibe apenas produtos cujo `title` contenha o termo (case-insensitive)
+
+#### Scenario: Busca sem correspondência
+- **WHEN** o admin digita um termo que não corresponde a nenhum produto
+- **THEN** a tabela exibe estado vazio
+
+#### Scenario: Busca limpa
+- **WHEN** o admin apaga o conteúdo do campo de busca
+- **THEN** todos os produtos voltam a ser exibidos
+
+---
+
+### Requirement: Campos opcionais do produto
+
+O sistema SHALL suportar campos opcionais `price`, `sizes` e `featured` no produto para
+enriquecer a exibição na landing page.
+
+#### Scenario: Criação com campos opcionais preenchidos
+- **WHEN** `POST /api/v1/admin/products/create` é chamado com `price`, `sizes` e `featured`
+- **THEN** o sistema persiste esses campos junto ao produto
+
+#### Scenario: Criação sem campos opcionais
+- **WHEN** `POST /api/v1/admin/products/create` é chamado sem `price`, `sizes` ou `featured`
+- **THEN** o sistema persiste o produto com `price = null`, `sizes = []` e `featured = false`

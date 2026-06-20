@@ -130,3 +130,47 @@ Detalhes completos: `openspec/changes/setup-mvp/backend-status.md`.
 - [x] 8.7 Criar página `web/pages/admin/produtos/index.vue` — usa `ProductTable`, busca via `useAdminProducts`
 - [x] 8.8 Criar página `web/pages/admin/produtos/novo.vue` — usa `ProductForm`, chama `create()`
 - [x] 8.9 Criar página `web/pages/admin/produtos/[id].vue` — usa `ProductForm`, carrega produto e chama `update()`
+
+---
+
+## 9. Auditoria Landing Page — 2026-06-20
+> spec: `product-listing`, `product-management`
+
+Features implementadas após MVP inicial e retroativamente documentadas nas specs.
+
+### 9.1 Domain / Infrastructure — Campos extras
+- [x] 9.1.1 Adicionar campos `price`, `sizes`, `featured`, `display_order` no schema Prisma
+- [x] 9.1.2 Aplicar `db push` / migration para os novos campos
+- [x] 9.1.3 Atualizar `ProductPrismaMapper` para mapear os novos campos
+- [x] 9.1.4 Atualizar `Product` entity e VOs para suportar `price`, `sizes`, `featured`
+
+### 9.2 API — Reorder
+- [x] 9.2.1 Criar rota `PATCH /api/v1/admin/products/reorder` em `server/src/api/v1/admin/products/reorder.ts`
+- [x] 9.2.2 Criar composable `useAdminProducts.reorder()` no frontend
+
+### 9.3 Frontend — Landing Page melhorias
+- [x] 9.3.1 Criar componente `web/components/AppCursor.vue` — cursor amarelo customizado com lerp
+- [x] 9.3.2 Criar componente `web/components/AppWhatsApp.vue` — botão flutuante WhatsApp com pulse
+- [x] 9.3.3 Criar componente `web/components/Landing/CountdownBanner.vue` — countdown para próximo drop
+- [x] 9.3.4 Criar componente `web/components/Landing/InstagramSection.vue` — grade 3×2 estática com hover
+- [x] 9.3.5 Criar composable `web/composables/useScrollReveal.ts` — reveal via atributo `data-reveal`
+- [x] 9.3.6 Criar composable `web/composables/useToast.ts` — notificações toast
+- [x] 9.3.7 Implementar layout editorial alternado duo/trio no `ProductGrid.vue`
+- [x] 9.3.8 Adicionar parallax no hero (bg move a 0.06x do scroll)
+- [x] 9.3.9 Converter `ProductCard.vue` em `NuxtLink` para `/produto/:id`
+
+### 9.4 Frontend — Filtro por coleção
+- [x] 9.4.1 Implementar lógica `getCollection()` para extrair coleção da `description`
+- [x] 9.4.2 Renderizar tabs de filtro dinâmicas em `pages/index.vue`
+- [x] 9.4.3 Filtrar `products` por coleção ativa no template
+
+### 9.5 Frontend — Página de detalhe do produto
+- [x] 9.5.1 Criar página `web/pages/produto/[id].vue` — layout editorial sticky com imagem + info
+- [x] 9.5.2 Integrar `useProducts.getById()` na página de detalhe
+
+### 9.6 Frontend — Admin melhorias
+- [x] 9.6.1 Adicionar campo de busca em tempo real em `pages/admin/produtos/index.vue`
+- [x] 9.6.2 Implementar drag-and-drop para reordenar produtos via HTML5 drag API
+- [x] 9.6.3 Adicionar botão "Salvar ordem" que chama `useAdminProducts.reorder()`
+- [x] 9.6.4 Adicionar botão "Ver no site ↗" no header do admin
+- [x] 9.6.5 Adicionar campos `price`, `sizes`, `featured` no `ProductForm.vue`

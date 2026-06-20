@@ -60,6 +60,8 @@ describe("Product.restore()", () => {
       image_url: "https://example.com/img.jpg",
       shopee_link: "https://shopee.com.br/123",
       active: false,
+      sizes: [],
+      featured: false,
       created_at: new Date("2026-01-01"),
       updated_at: new Date("2026-01-02"),
     };
@@ -105,6 +107,8 @@ describe("product.toggleActive()", () => {
       ...validInput,
       id: "x",
       active: false,
+      sizes: [],
+      featured: false,
       created_at: new Date(),
       updated_at: new Date(),
     });

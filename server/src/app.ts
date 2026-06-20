@@ -1,4 +1,5 @@
 import cors from '@fastify/cors';
+import multipart from '@fastify/multipart';
 import type { PrismaClient } from '@prisma/client';
 import fastify, { type FastifyInstance } from 'fastify';
 import { authMiddleware } from './api/middleware/authMiddleware';
@@ -8,6 +9,7 @@ import adminGetAllProductsRoute from './api/v1/admin/products/getAll';
 import adminReorderProductsRoute from './api/v1/admin/products/reorder';
 import adminToggleProductRoute from './api/v1/admin/products/toggle';
 import adminUpdateProductRoute from './api/v1/admin/products/update';
+import uploadRoute from './api/v1/admin/upload';
 import loginRoute from './api/v1/auth/login';
 import getAllProductsRoute from './api/v1/products/getAll';
 import getProductByIdRoute from './api/v1/products/getById';
@@ -21,6 +23,7 @@ export async function buildApp({ prisma }: BuildAppOptions): Promise<FastifyInst
   const app = fastify();
 
   await app.register(cors);
+  await app.register(multipart, { limits: { fileSize: 5 * 1024 * 1024 } });
 
   app.setErrorHandler((error, _request, reply) => {
     if (error instanceof DomainError) {
@@ -51,6 +54,7 @@ export async function buildApp({ prisma }: BuildAppOptions): Promise<FastifyInst
       await adminRoutes.register(adminDeleteProductRoute, { prisma });
       await adminRoutes.register(adminToggleProductRoute, { prisma });
       await adminRoutes.register(adminReorderProductsRoute, { prisma });
+      await adminRoutes.register(uploadRoute);
     },
     { prefix: '/api/v1' },
   );
